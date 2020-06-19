@@ -1,0 +1,6 @@
+Professor, estou com uma dificuldade de encontrar um algoritmo
+que consiga buscar uma palavra parecida no array de palavras 
+de forma rápida. No caso, eu ordenei as palavras e também implementei
+um algoritmo para calcular a distância entre duas palavras, porém na hora
+de buscar as palavras parecidas no array não consegui encontrar um algoritmo
+que seja relativamente rápido e preciso.
