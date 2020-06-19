@@ -1,5 +1,0 @@
-if (strcmp(palavra, array[meio]) > 0) {
-            buscaMenorDistancia(array, meio + 1, fim, palavra, menor);
-        } else {
-            buscaMenorDistancia(array, inicio, meio - 1, palavra, menor);
-        }
