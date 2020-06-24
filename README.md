@@ -1,10 +1,8 @@
 # Corretor Ortográfico Linguagem C
 
 ### Explicando a estrutura
-- Fiz dois arquivos de cabeçalho para separar as funcionalidades.
-- No arquivo algoritmos.h implementei alguns algoritmos úteis para o projeto.
-- No arquivo imports.h estão as funções referentes à importação dos arquivos, dentre elas a que o professor nos enviou.
-- No main.c (bem desorganizado, por sinal kkkkkk), eu importo o dicionário, importo o arquivo a ser corrigido, ordeno o dicionario e chamo uma função de correção que também está no main. 
+- Na pasta V1 está a primeira versão do código, que se encontra desorganizada.
+- Na pasta V2, organizei melhor as estratégias da versão anterior.
 
 
 ### Maiores problemas
