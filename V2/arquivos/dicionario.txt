@@ -320525,7 +320525,6 @@ aconselhar
 aconselhavel
 acontecer
 acontecido
-acontecimento
 acontecimentos
 acoplado
 acoplagem
@@ -321159,6 +321158,7 @@ alentejano
 alento
 alergenico
 alergia
+acontecimento
 alergica
 alergico
 alerta

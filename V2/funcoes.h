@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "lista.h"
 
 //CORES
 #define NONE "\033[0m"
@@ -14,14 +15,12 @@ void ordena(char *array[], int inicio, int fim);
 void merge(char *array[], int inicio, int meio, int fim);
 void slice(char*dest[], char *array[], int inicio, int fim);
 int busca(char *array[], char item[], int inicio, int fim);
-void correcao(char **dicionario, int nDicionario, char **texto, int n, char **res);
+char *correcao(char **dicionario, int nDicionario, char str[]);
 void getPalavra(char palavra[]);
-void corrigePalavra(char palavra[], char correta[]);
 void buscaParecidas(char **array, int n, char palavra[], int ret[3][2]);
 void invertePalavra(char palavra[], char ret[]);
 void lowerCase(char str1[], char str2[]);
-void corrigePalavra2(char palavra[], char correta[]);
-void teste(char **array, int index, char correta[], char errada[], char **corr);
+char *corrigePalavra(char str[], char correta[], char errada[]);
 
 /**
  * Separa uma string pelos espaços
@@ -63,7 +62,7 @@ void merge(char *array[], int inicio, int meio, int fim) {
     slice(direita, array, meio, fim); //Split do array da direita
 
     for (size_t i = inicio; i < fim; i++)
-    {
+    {   
         if (topoEsquerda >= tamEsquerda) { //Caso do array da esquerda estoure
             array[i] = direita[topoDireita];
             topoDireita ++;
@@ -97,7 +96,7 @@ void slice(char*dest[], char *array[], int inicio, int fim) {
  **/
 int busca(char *array[], char item[], int inicio, int fim) {
 
-    if (inicio < fim) { //Se o array for possível
+    if (inicio <= fim) { //Se o array for possível
         int meio = (inicio + fim) / 2; //Calcula o meio do array
         if (strcmp(array[meio], item) == 0) { 
             //Caso o meio for igual ao que se procura, retorna o índice
@@ -110,51 +109,42 @@ int busca(char *array[], char item[], int inicio, int fim) {
             busca(array, item, inicio, meio - 1);
         }
     } else {
-        //Caso não encontre nada
         return -1;
     }
 }
 
-void correcao(char **dicionario, int nDicionario, char **texto, int n, char **res) {
-    for (size_t i = 0; i < n; i++)
-    {
-        char palavra[100];
-        slice(palavra, texto[i], 0, strlen(texto[i]));
-        getPalavra(palavra);
-        int buscaRes = busca(dicionario, palavra, 0, nDicionario);
-        if (buscaRes == -1) {
-            int indices[3][2];
-            buscaParecidas(dicionario, nDicionario, palavra, indices);
-            printf("\n%s%sA palavra %s%s%s pode estar escrita incorretamente, as opções de substituição são:%s\n", BOLD, MAGENTA, YELLOW, palavra, MAGENTA, NONE);
-            printf("%s%s1. %s\n2. %s\n3. %s%s\n", BOLD, GREEN, dicionario[indices[0][0]], dicionario[indices[1][0]], dicionario[indices[2][0]], NONE);
-            printf("%sDigite o número da palavra a ser usada ou 0 para permanecer com a palavra %s.%s\n-> ", YELLOW, palavra, NONE);
-            int opcao = 0;
-            scanf("%d", &opcao);
-            if (opcao == 1) {
-                //corrigePalavra2(texto[i], dicionario[indices[0][0]]);
-                //corrigePalavra(texto[i], dicionario[indices[0][0]]);
-                teste(texto, i, dicionario[indices[0][0]], palavra, res);
-            } else if (opcao == 2) {
-                //corrigePalavra2(texto[i], dicionario[indices[1][0]]);
-                //corrigePalavra(texto[i], dicionario[indices[1][0]]);
-                teste(texto, i, dicionario[indices[1][0]], palavra, res);
-            } else if (opcao == 3) {
-                //corrigePalavra2(texto[i], dicionario[indices[2][0]]);
-                //corrigePalavra(texto[i], dicionario[indices[2][0]]);
-                teste(texto, i, dicionario[indices[2][0]], palavra, res);
-            }
+char *correcao(char **dicionario, int nDicionario, char str[]) {
+    char palavra[100];
+    slice(palavra, str, 0, strlen(str));
+    getPalavra(palavra);
+    int buscaRes = busca(dicionario, palavra, 0, nDicionario);
+    if (buscaRes == -1) {
+        int indices[3][2];
+        buscaParecidas(dicionario, nDicionario, palavra, indices);
+        printf("\n%s%sA palavra %s%s%s pode estar escrita incorretamente, as opções de substituição são:%s\n", BOLD, MAGENTA, YELLOW, palavra, MAGENTA, NONE);
+        printf("%s%s1. %s\n2. %s\n3. %s%s\n", BOLD, GREEN, dicionario[indices[0][0]], dicionario[indices[1][0]], dicionario[indices[2][0]], NONE);
+        printf("%sDigite o número da palavra a ser usada ou 0 para permanecer com a palavra %s.%s\n-> ", YELLOW, palavra, NONE);
+        int opcao = 0;
+        scanf("%d", &opcao);
+        if (opcao == 1) {
+            return corrigePalavra(str, dicionario[indices[0][0]], palavra);
+        } else if (opcao == 2) {
+            return corrigePalavra(str, dicionario[indices[1][0]], palavra);
+        } else if (opcao == 3) {
+            return corrigePalavra(str, dicionario[indices[2][0]], palavra);
+        } else {
+            return str;
         }
     }
+    return str;
 }
 
 void getPalavra(char palavra[]) {
     size_t tamanho = strlen (palavra);  
-    printf("%s\n", palavra);
     int inicio = palavra[0];
     int fim = palavra[tamanho - 1];  
 
     if (fim == '\n') {
-        printf("1\n");
         palavra[--tamanho] = '\0';
         fim = palavra[tamanho - 1];
     } 
@@ -164,14 +154,12 @@ void getPalavra(char palavra[]) {
     || (fim >= 128 && fim <= 167)
     || (fim >= 48 && fim <= 57)))  {
         palavra[--tamanho] = 0;
-        printf("2\n");
     } 
 
     if (!((inicio >= 65 && inicio <= 90) 
     || (inicio >= 97 && inicio <= 122)
     || (inicio >= 128 && inicio <= 167)
     || (inicio >= 48 && inicio <= 57)))  {
-        printf("3\n");
         for (size_t i = 1; i < tamanho; i++)
         {
             palavra[i - 1] = palavra[i]; 
@@ -222,52 +210,13 @@ int levenshtein(const char *str1, int len_str1, const char *str2, int len_str2) 
     return a + 1;
 }
 
-void corrigePalavra(char palavra[], char correta[]) {
-    size_t tamanho = strlen (palavra);  
-
-    int inicio = palavra[0];
-    int fim = palavra[tamanho - 1];  
-    int posI = 0;
-    int posF = tamanho - 1;
-
-    if (!((fim >= 65 && fim <= 90) 
-    || (fim >= 97 && fim <= 122)
-    || (fim >= 128 && fim <= 167)
-    || (fim >= 48 && fim <= 57)))  {
-        posF --;
-    } 
-
-    if (!((inicio >= 65 && inicio <= 90) 
-    || (inicio >= 97 && inicio <= 122)
-    || (inicio >= 128 && inicio <= 167)
-    || (inicio >= 48 && inicio <= 57)))  {
-        posI ++;
-    }
-
-    int cap = 0;
-    if ((palavra[0] >= 65 && palavra[0] <= 90)) {
-        cap = 1;
-    }
-
-    int j = 0;
-    for (size_t i = posI; i <= posF; i++)
-    {
-        if (i == 0 && cap == 1) {
-            palavra[i] = toupper(correta[j]);
-        } else {
-            palavra[i] = correta[j];
-        }
-        j ++;
-    }
-}
-
-void teste(char **array, int index, char correta[], char errada[], char** corr) {
-    int tamanhoTexto = strlen(array[index]);
+char *corrigePalavra(char str[], char correta[], char errada[]) {
+    int tamanhoTexto = strlen(str);
     int tamanhoCorreta = strlen(correta);
     int tamanhoErrada = strlen(errada);
     int tamanhoNova = tamanhoErrada + (tamanhoCorreta - tamanhoErrada);  
-    int fim = array[index][tamanhoTexto - 2];
-    int inicio = array[index][0];
+    int fim = str[tamanhoTexto - 1];
+    int inicio = str[0];
 
     int charI = 0;
     int charF = 0;
@@ -277,7 +226,7 @@ void teste(char **array, int index, char correta[], char errada[], char** corr) 
     || (fim >= 128 && fim <= 167)
     || (fim >= 48 && fim <= 57)))  {
         tamanhoNova ++;
-        charI = 1;
+        charF = 1;
     }
 
     if (!((inicio >= 65 && inicio <= 90) 
@@ -285,29 +234,33 @@ void teste(char **array, int index, char correta[], char errada[], char** corr) 
     || (inicio >= 128 && inicio <= 167)
     || (inicio >= 48 && inicio <= 57)))  {
         tamanhoNova ++;
-        charF = 1;
+        charI = 1;
     }
 
-    char nova[tamanhoNova + 1];
-    nova[tamanhoNova + 1] = '\0';
+    char *nova;
+    nova = malloc(tamanhoNova);
+    nova[tamanhoNova] = '\0';
 
     if (charI == 1) {
-        nova[0] = array[index][0];   
+        nova[0] = str[0];   
     }
 
     if (charF == 1) {
-        nova[tamanhoNova - 1] = array[index][tamanhoTexto - 2];
+        nova[tamanhoNova - 1] = str[tamanhoTexto - 1];
     }
 
     int j = 0;
     for (size_t i = charI; i < tamanhoNova - charF; i++)
     {
-        nova[i] = correta[j];
+        if (i == charI && ((int) str[charI] >= 65 && (int) str[charI] <= 90)) {
+            nova[i] = toupper(correta[j]);    
+        } else {
+            nova[i] = correta[j];
+        }
         j ++;
     }
-    
-    int *pnt = nova;
-    corr[index] = pnt;
+
+    return nova;
 }
 
 void buscaParecidas(char **array, int n, char palavra[], int ret[3][2]) {
@@ -334,6 +287,10 @@ void buscaParecidas(char **array, int n, char palavra[], int ret[3][2]) {
         }
         int dist = abs(ig - dif);
 
+        if (strcmp("abastoso", array[i]) == 0) {
+            printf("%d\n", dist);
+        }
+
         for (size_t k = 0; k < 3; k++)
         {  
             int t1 = 0;
@@ -342,6 +299,7 @@ void buscaParecidas(char **array, int n, char palavra[], int ret[3][2]) {
                 t1 = abs(strlen(array[ret[k][0]]) - strlen(palavra));
                 t2 = abs(strlen(array[i]) - strlen(palavra));
             }
+            
             if (i == 0) {
                 ret[k][0] = i;
                 ret[k][1] = dist;
