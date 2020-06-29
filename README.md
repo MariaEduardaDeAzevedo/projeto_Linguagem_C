@@ -14,9 +14,11 @@ A entrada segue um formato único:
 - O x acima indica o tipo de entrada que será dada, isto é, se você deseja digitar um texto direto na entrada ou se deseja importar de um arquivo. 
 
 Para digitar na entrada (passando texto como argumento):
+
 ```./main 1 texto para ser corrigido```
 
 Para importar de um arquivo (passando caminho do arquivo como argumento):
+
 ```./main 2 caminho_do_arquivo/nome_do_arquivo.txt```
 
 Qualquer entrada fora desse padrão retornará um sinal de entrada inválida.
