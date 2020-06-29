@@ -5,10 +5,9 @@
 #define comprimentoDaLista 256
 #define comprimentoDasPalavras 256
 
-char **importDicionario (char *fileName, int *n);
-char **lerArquivo (char *fileName, int *n);
+char **lerLinhas (char *fileName, int *n);
 
-char **importDicionario (char *fileName, int *n) {
+char **lerLinhas (char *fileName, int *n) {
 
     FILE *file = fopen (fileName, "r");
 
@@ -31,7 +30,7 @@ char **importDicionario (char *fileName, int *n) {
         size_t wordlen = strlen (buf);  
 
         if (buf[wordlen - 1] == '\n')  
-            buf[--wordlen] = 0;
+            buf[--wordlen] = '\0';
 
         palavras[(*n)++] = strdup (buf);   
 
@@ -48,41 +47,5 @@ char **importDicionario (char *fileName, int *n) {
     }
 
     fclose(file);
-    return palavras;
-}
-
-char **lerArquivo (char *fileName, int *n) {
-    char **palavras = NULL;
-    FILE *arq = NULL;
-    char buf[BUFSIZ] = {0};
-    int maxlen = comprimentoDaLista > 0 ? comprimentoDaLista : 1;
-
-    arq = fopen(fileName, "r");
-
-    if (!(palavras = calloc (maxlen, sizeof *palavras))) {
-        fprintf (stderr, "pegaPalavras() erro: memória virtual exaurida.\n");
-        return NULL;
-    }
-
-    while(fgets(buf, BUFSIZ, arq) != NULL) {
-        char *token = strtok(strdup(buf), " ");
-
-        while (token != NULL) {
-            
-            palavras[(*n)++] = token; 
-            token = strtok(NULL, " ");
-            if (*n == maxlen) { 
-                void *tmp = realloc (palavras, maxlen * 2 * sizeof *palavras);
-                if (!tmp) {
-                    return palavras;
-                }
-                palavras = tmp;
-                memset (palavras + maxlen, 0, maxlen * sizeof *palavras);
-                maxlen *= 2;
-            }    
-        }    
-    }
-
-    fclose(arq);
     return palavras;
 }

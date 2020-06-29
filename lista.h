@@ -1,10 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #ifndef _LISTA_H_
 #define _LISTA_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct node;
 struct node *lista();
@@ -54,4 +53,5 @@ void imprimeLista(struct node *l) {
         printf("Vazia\n");
     }
 }
-#endif
+
+#endif 

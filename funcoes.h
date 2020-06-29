@@ -17,14 +17,13 @@ void slice(char*dest[], char *array[], int inicio, int fim);
 int busca(char *array[], char item[], int inicio, int fim);
 char *correcao(char **dicionario, int nDicionario, char str[]);
 void getPalavra(char palavra[]);
-void buscaParecidas(char **array, int n, char palavra[], int ret[3][2]);
-void invertePalavra(char palavra[], char ret[]);
-void lowerCase(char str1[], char str2[]);
-char *corrigePalavra(char str[], char correta[], char errada[]);
 
-/**
- * Separa uma string pelos espaços
- **/
+char *corrigePalavra(char str[], char correta[], char errada[]);
+int buscaParecidas(char **array, int n, char palavra[], int enc[]);
+int existeNoArray(int array[], int index);
+void invertePalavra(char palavra[], char ret[]);
+
+
 int split(char str[], char **array) {
     char *token = strtok(str, " ");
     int cont = 0; //Guardar a posição
@@ -36,9 +35,7 @@ int split(char str[], char **array) {
     return cont;
 }
 
-/**
- *Algoritmo de ordenação do Merge Sort 
- **/
+
 void ordena(char *array[], int inicio, int fim) {
     if (fim - inicio > 1) { // Se o array tiver mais de um elemento
         int meio = (fim + inicio) / 2; //Calcula o meio do array
@@ -48,9 +45,7 @@ void ordena(char *array[], int inicio, int fim) {
     }
 }
 
-/**
- * Algoritmo do merge
- **/
+
 void merge(char *array[], int inicio, int meio, int fim) {
     int tamEsquerda = meio - inicio; //Tamanho do array da esquerda
     int tamDireita = fim - meio; //Tamanho do array da direita
@@ -79,9 +74,7 @@ void merge(char *array[], int inicio, int meio, int fim) {
     }
 }
 
-/** 
- * Copia parte de um array para outro array 
- **/
+
 void slice(char*dest[], char *array[], int inicio, int fim) {
     int cont = 0;
     for (size_t i = inicio; i < fim; i++)
@@ -91,9 +84,7 @@ void slice(char*dest[], char *array[], int inicio, int fim) {
     }
 }
 
-/** 
- * Algoritmo da busca binária 
- **/
+
 int busca(char *array[], char item[], int inicio, int fim) {
 
     if (inicio <= fim) { //Se o array for possível
@@ -113,31 +104,36 @@ int busca(char *array[], char item[], int inicio, int fim) {
     }
 }
 
+
 char *correcao(char **dicionario, int nDicionario, char str[]) {
     char palavra[100];
     slice(palavra, str, 0, strlen(str));
     getPalavra(palavra);
     int buscaRes = busca(dicionario, palavra, 0, nDicionario);
     if (buscaRes == -1) {
-        int indices[3][2];
-        buscaParecidas(dicionario, nDicionario, palavra, indices);
+        int indices[3] = {-1};
+        //buscaParecidas(dicionario, nDicionario, palavra, indices);
+        indices[0] = buscaParecidas(dicionario, nDicionario, palavra, indices);
+        indices[1] = buscaParecidas(dicionario, nDicionario, palavra, indices);
+        indices[2] = buscaParecidas(dicionario, nDicionario, palavra, indices);
         printf("\n%s%sA palavra %s%s%s pode estar escrita incorretamente, as opções de substituição são:%s\n", BOLD, MAGENTA, YELLOW, palavra, MAGENTA, NONE);
-        printf("%s%s1. %s\n2. %s\n3. %s%s\n", BOLD, GREEN, dicionario[indices[0][0]], dicionario[indices[1][0]], dicionario[indices[2][0]], NONE);
+        printf("%s%s1. %s\n2. %s\n3. %s%s\n", BOLD, GREEN, dicionario[indices[0]], dicionario[indices[1]], dicionario[indices[2]], NONE);
         printf("%sDigite o número da palavra a ser usada ou 0 para permanecer com a palavra %s.%s\n-> ", YELLOW, palavra, NONE);
         int opcao = 0;
         scanf("%d", &opcao);
         if (opcao == 1) {
-            return corrigePalavra(str, dicionario[indices[0][0]], palavra);
+            return corrigePalavra(str, dicionario[indices[0]], palavra);
         } else if (opcao == 2) {
-            return corrigePalavra(str, dicionario[indices[1][0]], palavra);
+            return corrigePalavra(str, dicionario[indices[1]], palavra);
         } else if (opcao == 3) {
-            return corrigePalavra(str, dicionario[indices[2][0]], palavra);
+            return corrigePalavra(str, dicionario[indices[2]], palavra);
         } else {
             return str;
         }
     }
     return str;
 }
+
 
 void getPalavra(char palavra[]) {
     size_t tamanho = strlen (palavra);  
@@ -173,42 +169,6 @@ void getPalavra(char palavra[]) {
     }
 }
 
-/**
- * Algoritmo de Levenshtein para calcular similaridade entre strings  
- **/
-int levenshtein(const char *str1, int len_str1, const char *str2, int len_str2) {
-    int a, b, c;
-    if (len_str1 == 0) { 
-        //Se o comprimento da str1 for 0, retorna o comprimento da str2
-        return len_str2;
-    } else if (len_str2 == 0) {
-        //Se o comprimento da str2 for 0, retorna o comprimento da str1
-        return len_str1;
-    } else if (str1[len_str1 - 1] == str2[len_str2 - 1]) {
-        //Caso as últimas posições das strings sejam iguais,
-        //chama-se mais uma vez o algoritmo até o tamanho anterior - 1
-        return levenshtein(str1, len_str1 - 1, str2, len_str2 - 1);
-    }
-        
-    //Caso não satisfaça as condições
-
-    //Calcula a distância até o penúltimo elemento
-    a = levenshtein(str1, len_str1 - 1, str2, len_str2 - 1);
-    //Calcula a distância da str1 completa com a str2
-    //até o penúltimo
-    b = levenshtein(str1, len_str1, str2, len_str2 - 1);
-    //Calcula a distância da str2 completa com a str1
-    //até o penúltimo
-    c = levenshtein(str1, len_str1 - 1, str2, len_str2);
-
-    if (a > b) { 
-        a = b;
-    }
-    if (a > c) {  
-        a = c;
-    }
-    return a + 1;
-}
 
 char *corrigePalavra(char str[], char correta[], char errada[]) {
     int tamanhoTexto = strlen(str);
@@ -263,62 +223,76 @@ char *corrigePalavra(char str[], char correta[], char errada[]) {
     return nova;
 }
 
-void buscaParecidas(char **array, int n, char palavra[], int ret[3][2]) {
-    int k = 0;
+
+int buscaParecidas(char **array, int n, char palavra[], int enc[]) {
+    double maior = -1;
+    int menorIndex;
+    int tamPalavra = strlen(palavra);
+    char erradaInvertida[tamPalavra];
+    invertePalavra(palavra, erradaInvertida);
     for (size_t i = 0; i < n; i++)
-    {   
-        int dif = 0;
-        int ig = 0;
-        int tam = strlen(palavra);
-        char invertida1[tam];
-        char invertida2[tam];
-        invertePalavra(array[i], invertida1);
-        invertePalavra(palavra, invertida2);
-        
-        for (size_t j = 1; j < tam; j++)
-        {   
-            if (strncmp(array[i], palavra, j) != 0) {
-                dif ++;
-            }     
-
-            if (strncmp(invertida1, invertida2, j) == 0) {
-                ig ++;
-            }  
-        }
-        int dist = abs(ig - dif);
-
-        if (strcmp("abastoso", array[i]) == 0) {
-            printf("%d\n", dist);
-        }
-
-        for (size_t k = 0; k < 3; k++)
-        {  
-            int t1 = 0;
-            int t2 = 0;
-            if (i != 0) {
-                t1 = abs(strlen(array[ret[k][0]]) - strlen(palavra));
-                t2 = abs(strlen(array[i]) - strlen(palavra));
+    {
+        if (existeNoArray(enc, i) == 0) {
+            int tamCorreta = strlen(array[i]);
+            
+            int p1 = 0;
+            for (size_t j = 0; j < tamCorreta; j++)
+            {
+                if ((int) array[i][j] == (int) palavra[j]) {
+                    p1 ++;
+                }
             }
             
-            if (i == 0) {
-                ret[k][0] = i;
-                ret[k][1] = dist;
-            } else if (ig == dif) {
-                ret[k][0] = i;
-                ret[k][1] = dist;
-                break;
-            } else if (ret[k][1] > dist) {
-                ret[k][0] = i;
-                ret[k][1] = dist;
-                break;
-            } else if (ig > dif) {
-                ret[k][0] = i;
-                ret[k][1] = dist;
-                break;
+            char corretaInvertida[tamCorreta];
+            invertePalavra(array[i], corretaInvertida);
+            
+            int p2 = 0;
+            for (size_t j = 0; j < tamCorreta; j++)
+            {
+                if ((int) corretaInvertida[j] == (int) erradaInvertida[j]) {
+                    p2 ++;
+                }
+            }
+
+            double porcentagem = 0;
+
+
+
+            if (tamPalavra > tamCorreta) {
+                porcentagem = (p1 + p2)/(tamPalavra * 1.0);
+            } else if (p1 == p2) {
+                porcentagem = (p1 + 1)/(tamCorreta * 1.0);
+            } else {
+                porcentagem = (p1 + p2)/(tamCorreta * 1.0);
+            }
+            
+            while (porcentagem > 1)
+            {
+                porcentagem--;
+            }
+
+            int tamMenor = 0;
+            if (tamCorreta > tamPalavra) {
+                tamMenor = tamPalavra;
+            } else {
+                tamMenor = tamCorreta;
+            }
+
+            tamMenor ++;
+            tamMenor = tamMenor/2;
+
+            if (porcentagem > maior || maior == -1) {
+                maior = porcentagem;
+                menorIndex = i;
+            } else if (porcentagem == maior && strncmp(array[i], palavra, tamMenor) == 0) {
+                maior = porcentagem;
+                menorIndex = i;
             }
         }
     }
+    return menorIndex;
 }
+
 
 void invertePalavra(char palavra[], char ret[]) {
     int tam = strlen(palavra);
@@ -328,4 +302,15 @@ void invertePalavra(char palavra[], char ret[]) {
         ret[i] = palavra[j];
         j --;
     }
+}
+
+
+int existeNoArray(int array[], int index) {
+    for (size_t i = 0; i < 3; i++)
+    {
+        if (array[i] == index) {
+            return 1;
+        }
+    }
+    return 0;
 }
