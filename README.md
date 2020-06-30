@@ -7,8 +7,6 @@ Este programa importa um dicionário de palavras em português e corrige textos 
 #### 1. Execução e Entrada
 Para executar o programa, podemos chamar apenas ./main e executar os processou, ou passar argumentos de entrada como mostrados abaixo.
 
-![Imagem 1. Executando com ./main](https://drive.google.com/file/d/1_h64QTc1QHvD1sjUmNvpHh518XMan7np/view?usp=sharing)
-
 A entrada segue um formato único:
 
 ```./main x argumento```
