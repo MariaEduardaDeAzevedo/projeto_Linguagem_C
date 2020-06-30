@@ -36,14 +36,14 @@ Para digitar na entrada (passando texto como argumento):
 
 ```./main 1 texto para ser corrigido```
 
-![Imagem 6. Exemplo de execução em linha de comando para texto digitado.]()
+![Imagem 6. Exemplo de execução em linha de comando para texto digitado.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2010-15-22.png?token=AHDIVVQAUGCRXJERVELGQGS7AR3L4)
 ###### Exemplo de execução na linha de comando digitando texto
 
 Para importar de um arquivo (passando caminho do arquivo como argumento):
 
 ```./main 2 caminho_do_arquivo/nome_do_arquivo.txt```
 
-![Imagem 6. Exemplo de execução em linha de comando para texto digitado.]()
+![Imagem 7. Exemplo de execução em linha de comando para correção de arquivo.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2010-15-53.png?token=AHDIVVVZORS3B4PKSYDGWI27AR3PG)
 ###### Exemplo de execução na linha de comando passando caminho do arquivo
 
 
