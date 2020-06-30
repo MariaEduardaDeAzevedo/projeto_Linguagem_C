@@ -5,8 +5,15 @@ Este programa importa um dicionário de palavras em português e corrige textos 
 ### Detalhes do funcionamento
 
 #### 1. Execução e Entrada
-Para executar o programa, podemos chamar apenas ./main e executar os processou, ou passar argumentos de entrada como mostrados abaixo.
+Para executar o programa, podemos chamar apenas ./main, como podemos ver na imagem abaixo:
 
+![Imagem 1. Executando com ./main](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-51-33.png?token=AHDIVVT2UDCMO2FTD2YRBLK7ARZH6)
+
+![Imagem 2. Escolhendo a opção 1.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-52-16.png?token=AHDIVVXN3PVHONGHWFHY64S7ARZQQ)
+
+![Imagem 3. Exemplo de correção.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-52-27.png?token=AHDIVVQPNNX2HNGFPF4ZYKK7ARZWG)
+
+Podemos também informar os argumentos diretamente em linha de comando.
 A entrada segue um formato único:
 
 ```./main x argumento```
