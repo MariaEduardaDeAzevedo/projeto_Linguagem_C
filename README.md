@@ -8,10 +8,22 @@ Este programa importa um dicionário de palavras em português e corrige textos 
 Para executar o programa, podemos chamar apenas ./main, como podemos ver na imagem abaixo:
 
 ![Imagem 1. Executando com ./main](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-51-33.png?token=AHDIVVT2UDCMO2FTD2YRBLK7ARZH6)
+###### Executando com ./main
+
 
 ![Imagem 2. Escolhendo a opção 1.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-52-16.png?token=AHDIVVXN3PVHONGHWFHY64S7ARZQQ)
+###### Escolhendo digitar texto diretamente na interface
+
 
 ![Imagem 3. Exemplo de correção.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-52-27.png?token=AHDIVVQPNNX2HNGFPF4ZYKK7ARZWG)
+###### Exemplo de correção de palavra
+
+![Imagem 4. Escolhendo a opção 2.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-53-13.png?token=AHDIVVUEN6IYIWF5XRUJMTC7AR2EY)
+###### Escolhendo importar conteúdo a ser corrigido de um arquivo
+
+![Imagem 5. Alterando gravação do arquivo.](https://raw.githubusercontent.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/master/arquivos/imgs/Captura%20de%20tela%20de%202020-06-30%2009-53-19.png?token=AHDIVVT5FGKOPT6YDZENMCS7AR2IC)
+###### Alterando gravação do arquivo para texto corrigido
+
 
 Podemos também informar os argumentos diretamente em linha de comando.
 A entrada segue um formato único:
@@ -24,9 +36,16 @@ Para digitar na entrada (passando texto como argumento):
 
 ```./main 1 texto para ser corrigido```
 
+![Imagem 6. Exemplo de execução em linha de comando para texto digitado.]()
+###### Exemplo de execução na linha de comando digitando texto
+
 Para importar de um arquivo (passando caminho do arquivo como argumento):
 
 ```./main 2 caminho_do_arquivo/nome_do_arquivo.txt```
+
+![Imagem 6. Exemplo de execução em linha de comando para texto digitado.]()
+###### Exemplo de execução na linha de comando passando caminho do arquivo
+
 
 Qualquer entrada fora desse padrão retornará um sinal de entrada inválida.
 
@@ -37,3 +56,5 @@ Quando desejar substituir a palavra, digite o número correspondente a ela, caso
 #### 3. Correção em arquivo
 Quando a sua entrada se tratar de um arquivo, você poderá optar entra corrigir diretamente o conteúdo desse ou apenas mostrar o texto corrigido em tela.
 
+
+###### Na pasta arquivos você poderá encontrar um arquivo de texto (arquivo.txt) com um texto a ser corrigido como exemplo.
