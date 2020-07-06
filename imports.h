@@ -7,6 +7,9 @@
 
 char **lerLinhas (char *fileName, int *n);
 
+/**
+ * Leitura de linhas de um arquivo de texto
+ **/
 char **lerLinhas (char *fileName, int *n) {
 
     FILE *file = fopen (fileName, "r");
@@ -21,7 +24,7 @@ char **lerLinhas (char *fileName, int *n) {
     int maxlen = comprimentoDaLista > 0 ? comprimentoDaLista : 1;
 
     if (!(palavras = calloc (maxlen, sizeof *palavras))) {
-        fprintf (stderr, "importaDicionario() erro: memória virtual exaurida.\n");
+        fprintf (stderr, "lerLinhas() erro: memória virtual exaurida.\n");
         return NULL;
     }
 
@@ -37,7 +40,7 @@ char **lerLinhas (char *fileName, int *n) {
         if (*n == maxlen) { 
             void *tmp = realloc (palavras, maxlen * 2 * sizeof *palavras);
             if (!tmp) {
-                fprintf (stderr, "importaDicionario() realloc: memória exaurida.\n");
+                fprintf (stderr, "lerLinhas() realloc: memória exaurida.\n");
                 return palavras;
             }
             palavras = tmp;

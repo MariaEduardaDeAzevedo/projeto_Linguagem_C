@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Documentação - Corretor Ortográfico</title>
+</head>
+<body>
+    <header>
+        <a href="index.html"><h3>Corretor Ortográfico - Documentação</h3></a>
+        <ul>
+            <li><a href="#main">main.c</a></li>
+            <li><a href="#funcoes">funcoes.h</a></li>
+            <li><a href="#imports">imports.h</a></li>
+            <li><a href="#lista">lista.h</a></li>
+        </ul>
+    </header>
+    <main>
+        <section>
+            <h1>Corretor Ortográfico - Informações Gerais</h1>
+            <ul>
+                <li>
+                    Linguagem utilizada: C
+                </li>
+                <li>
+                    Utilidade: Avaliação de textos e correção de palavras possivelmente
+                    erradas.
+                </li>
+            </ul>
+        </section>
+        <section id="main">
+            <h1>main.c</h1>
+            <p>Arquivo responsável pela interação com o usuário.</p>
+            <div class="funcao">
+                <h3>Visão geral</h3>
+                <p>O main.c é responsável por:</p>
+                <ul>
+                    <li>Importação do dicionário de palavras</li>
+                    <li>Interação com o usuário por meio de argumentos ou interface em linha de comando</li>
+                    <li>Retorno e/ou reescrita do texto corrigido</li>
+                </ul>
+                <p>
+                    O funcionamento da aplicação pode ser visto de forma detalhada 
+                    no <a target="_blank" href="https://github.com/MariaEduardaDeAzevedo/projeto_Linguagem_C/blob/master/README.md">README.md</a> do repositório do projeto no GitHub.
+                </p>
+            </div>
+        </section>
+        <section id="funcoes">
+            <h1>funcoes.h</h1>
+            <p>
+                Arquivo de cabeçalho com funções e implementações de algoritmos 
+                úteis para a aplicação.
+            </p>
+            <div class="funcao">
+                <h3>int split(char str[], char **array)</h3>
+                <p>
+                    Separa palavras de uma string e as coloca em um array de destino, retornando
+                    um inteiro que condiz com o número de palavras da string.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char str[]</strong> - String a ter as palavras separadas
+                    </li>
+                    <li>
+                        <strong>char **array</strong> - Array de destino para as palavras separadas
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>void ordena(char *array[], int inicio, int fim)</h3>
+                <p>Ordena array de palavras com a implementação do Merge Sort.</p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char *array[]</strong> - Array a ser ordenado
+                    </li>
+                    <li>
+                        <strong>int inicio</strong> - Posição inicial do array
+                    </li>
+                    <li>
+                        <strong>int fim</strong> - Posição final do array
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>void merge(char *array[], int inicio, int meio, int fim)</h3>
+                <p>Função com implemetação do algoritmo merge, utilizado para ordenação.</p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char *array[]</strong> - Array a ser ordenado
+                    </li>
+                    <li>
+                        <strong>int inicio</strong> - Posição inicial do array
+                    </li>
+                    <li>
+                        <strong>int meio</strong> - Posição mediana do array
+                    </li>
+                    <li>
+                        <strong>int fim</strong> - Posição final do array
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>void slice(char *dest[], char *array[], int inicio, int fim)</h3>
+                <p>
+                    Função que copia array em uma posição delimitada para um 
+                    outro array de destino.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char *dest[]</strong> - Array de destino
+                    </li>
+                    <li>
+                        <strong>char *array[]</strong> - Array de origem
+                    </li>
+                    <li>
+                        <strong>int inicio</strong> - Posição inicial de cópia para array de destino
+                    </li>
+                    <li>
+                        <strong>int fim</strong> - Posição final de cópia para array de destino
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>int busca(char *array[], char item[], int inicio, int fim)</h3>
+                <p>
+                   Função com implementação do algoritmo de busca binária.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char *array[]</strong> - Array de strings no qual acontecerá a busca
+                    </li>
+                    <li>
+                        <strong>char item[]</strong> - String a ser buscada no array
+                    </li>
+                    <li>
+                        <strong>int inicio</strong> - Posição inicial do array de busca
+                    </li>
+                    <li>
+                        <strong>int fim</strong> - Posição final do array de busca
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>char *correcao(char **dicionario, int nDicionario, char str[])</h3>
+                <p>
+                   Função que avalia palavra passada, procurando-a no dicionário e
+                   efetuando a busca por palavras parecidas caso essa não seja encontrada.
+                   Retorna uma string correspondente a avaliação da palavra.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char **dicionario</strong> - Array com o dicionário de palavras importado
+                    </li>
+                    <li>
+                        <strong>int nDicionario</strong> - Inteiro com o tamanho do dicionário
+                    </li>
+                    <li>
+                        <strong>char str[]</strong> - String a ser avaliada
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>void getPalavra(char palavra[])</h3>
+                <p>
+                   Função que limpa caracteres não alfabéticos de uma palavra passada.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char palavra[]</strong> - String a ter caracteres limpos
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>char *corrigePalavra(char str[], char correta[], char errada[])</h3>
+                <p>
+                   Função que corrige a palavra a ser inserida novamente no texto de acordo
+                   com a formatação inicial da entrada. Retorna a string reformatada.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char str[]</strong> - String dada na entrada
+                    </li>
+                    <li>
+                        <strong>char correta[]</strong> - String correspondente a palavra corrigida
+                    </li>
+                    <li>
+                        <strong>char errada[]</strong> - String correspondente a palavra errada
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>int buscaParecidas(char **array, int n, char palavra[], int enc[])</h3>
+                <p>
+                   Algoritmo para encontrar palavras parecidas a palavra passada como parâmetro no
+                   array de palavras com base no percentual de caracteres iguais.
+                   Retorna o índice da palavra mais próxima encontrada.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char **array</strong> - Array de strings contendo um conjunto de palavras
+                    </li>
+                    <li>
+                        <strong>char palavra[]</strong> - String correspondente a palavra a ter uma próxima buscada
+                    </li>
+                    <li>
+                        <strong>int enc[]</strong> - Array com inteiros correspondentes aos índices de palavras parecidas anteriormente encontradas
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>int existeNoArray(int array[], int index)</h3>
+                <p>
+                   Verifica a existência de um elemento em um array, retornando 0 caso não encontre
+                   e 1 caso seja encontrado.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>int array[]</strong> - Array de inteiros 
+                    </li>
+                    <li>
+                        <strong>int index</strong> - Inteiro a ser buscado no array
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>void invertePalavra(char palavra[], char ret[])</h3>
+                <p>
+                   Função que inverte a ordem dos caracteres de uma string as colocando
+                   no array de destino.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char palavra[]</strong> - String a ser invertida
+                    </li>
+                    <li>
+                        <strong>char ret[]</strong> - Array de destino
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section id="imports">
+            <h1>imports.h</h1>
+            <p>Arquivo de cabeçalho responsável pela importação de conteúdos de arquivos.</p>
+            <div class="funcao">
+                <h3>char **lerLinhas (char *fileName, int *n)</h3>
+                <p>
+                    Função responsável por importar conteúdo de um arquivo linha a linha. 
+                    Retorna um array com o conteúdo importado.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>char *fileName</strong> - Caminho do arquivo a ser importado
+                    </li>
+                    <li>
+                        <strong>int *n</strong> - Inteiro correspondente ao tamanho do array que será retornado
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section id="lista">
+            <h1>lista.h</h1>
+            <p>Implementação simples de lista.</p>
+            <div class="funcao">
+                <h3>struct node</h3>
+                <p>
+                    Estrutura de um nó da lista.
+                </p>
+                <h4>Atributos</h4>
+                <ul>
+                    <li>
+                        <strong>char *elemento</strong> - String a ser armazenada no nó
+                    </li>
+                    <li>
+                        <strong>int index</strong> - Inteiro correspondente ao índice do nó
+                    </li>
+                    <li>
+                        <strong>struct *node link</strong> - Próximo nó da lista
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>struct node *lista()</h3>
+                <p>
+                    Construtor da lista. Retorna o nó 0 da lista.
+                </p>
+            </div>
+            <div class="funcao">
+                <h3>struct node *add(struct node *n, char str[])</h3>
+                <p>
+                    Adiciona novo nó no fim da lista.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>struct node *n</strong> - Lista a ter novo nó adicionado
+                    </li>
+                    <li>
+                        <strong>char str[]</strong> - String referente ao elemento do nó a ser adicionado
+                    </li>
+                </ul>
+            </div>
+            <div class="funcao">
+                <h3>void imprimeLista(struct node *l)</h3>
+                <p>
+                    Imprime conteúdo da lista.
+                </p>
+                <h4>Parâmetros</h4>
+                <ul>
+                    <li>
+                        <strong>struct node *l</strong> - Lista a ser impressa
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <a target="_blank" href="https://github.com/MariaEduardaDeAzevedo">Implementação por Maria Eduarda de Azevedo Silva</a>
+    </footer>
+</body>
+</html>
